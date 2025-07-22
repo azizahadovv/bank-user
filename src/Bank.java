@@ -13,7 +13,7 @@ public class Bank {
     private int cash;
     private int card;
     private int bank;
-    private int balanceId=1;
+    private int balanceId = 1;
 
     private final ArrayList<Balance> balances = new ArrayList<>();
     private final ArrayList<Users> users = new ArrayList<>();
@@ -47,7 +47,7 @@ public class Bank {
                     System.out.print("Isim Familiyangizni kiriting: ");
                     user.setName(scannerStr.nextLine());
                     System.out.print("Yoshingizni kiriting: ");
-                    user.setAge(scannerStr.nextInt());
+                    user.setAge(scannerInt.nextInt());
                     users.add(user);
                     break;
                 case 2:
@@ -60,9 +60,9 @@ public class Bank {
 
     public void allUsers() {
         System.out.println("-------------------");
-        for (int i = 0; i < users.size(); i++) {
-            System.out.println(users.get(i).getId() + "." + users.get(i).getName());
-        }
+
+        for (int i = 0; i < users.size(); i++) System.out.println(users.get(i).getId() + "." + users.get(i).getName());
+
         System.out.println("-------------------");
 
     }
