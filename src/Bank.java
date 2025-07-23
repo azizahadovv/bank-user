@@ -65,20 +65,25 @@ public class Bank {
         users.get(id).setBalances(balance);
     }
 
-
     public void bankAccountTotal() {
-        System.out.println(Payment.CASH + ":" + cash);
-        System.out.println(Payment.CARD + ":" + card);
-        System.out.println(Payment.BANK + ":" + bank);
-        System.out.println("TOTAL BALANCE" + ":" + totalBalance);
+        cash = 0;
+        card = 0;
+        bank = 0;
+        totalBalance = 0;
 
         for (int i = 0; i < balances.size(); i++) {
+            System.out.println(balances.get(i).getAmount());
             if (balances.get(i).getType().equals("CASH")) cash += balances.get(i).getAmount();
             if (balances.get(i).getType().equals("CARD")) card += balances.get(i).getAmount();
             if (balances.get(i).getType().equals("BANK")) bank += balances.get(i).getAmount();
         }
 
-        totalBalance += card + cash + bank;
+        totalBalance = card + cash + bank;
+
+        System.out.println(Payment.CASH.name() + ": " + cash);
+        System.out.println(Payment.CARD.name() + ": " + card);
+        System.out.println(Payment.BANK.name() + ": " + bank);
+        System.out.println("TOTAL BALANCE: " + totalBalance);
 
     }
 
