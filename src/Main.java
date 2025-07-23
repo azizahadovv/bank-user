@@ -19,9 +19,9 @@ public class Main {
                     bank.bankAccountTotal();
                     break;
                 case 2: // Pul Kiritish
-
+                    bank.amountToDeposit();
                     break;
-                case 3: //Pul Chiqarish
+                case 3: // Pul Chiqarish
                     break;
                 case 4: // Foydalanuvchilar Ro'yxati
                     bank.addUserInBank();

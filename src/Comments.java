@@ -15,5 +15,13 @@ public class Comments {
         System.out.println("2-Chiqish");
         System.out.println("------------------");
     }
+    public void paymentType () {
+        System.out.println("------------------");
+        System.out.println("1-CASH");
+        System.out.println("2-CARD");
+        System.out.println("3-BANK");
+        System.out.println("4-EXIT");
+        System.out.println("------------------");
+    }
 
 }

@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Bank {
     private Payment payment;
-    private Comments comments = new Comments();
+    private final Comments comments = new Comments();
 
     private final Scanner scannerStr = new Scanner(System.in);
     private final Scanner scannerInt = new Scanner(System.in);
@@ -13,7 +13,13 @@ public class Bank {
     private int cash;
     private int card;
     private int bank;
-    private int balanceId = 1;
+
+    private int totalBalance;
+
+    private int balanceCashId = 1;
+    private int balanceCardId = 1;
+    private int balanceBankId = 1;
+    private int userId = 1;
 
     private final ArrayList<Balance> balances = new ArrayList<>();
     private final ArrayList<Users> users = new ArrayList<>();
@@ -23,6 +29,7 @@ public class Bank {
         System.out.println(Payment.CASH + ":" + cash);
         System.out.println(Payment.CARD + ":" + card);
         System.out.println(Payment.BANK + ":" + bank);
+        System.out.println("TOTAL BALANCE" + ":" + totalBalance);
 
         for (int i = 0; i < balances.size(); i++) {
             if (balances.get(i).getType().equals("CASH")) cash += balances.get(i).getAmount();
@@ -30,20 +37,78 @@ public class Bank {
             if (balances.get(i).getType().equals("BANK")) bank += balances.get(i).getAmount();
         }
 
+        totalBalance += card + cash + bank;
+
     }
 
-    public void addUserInBank() {
-        Users user = new Users();
-
+    public void amountToDeposit() {
         boolean isExit = false;
         while (!isExit) {
+            comments.paymentType();
+            switch (scannerInt.nextInt()) {
+                case 1: // CASH
+                    cashDeposite();
+                    break;
+                case 2: // CARD
+                    cardDeposite();
+                    break;
+                case 3: // BAKN
+                    bankDeposite();
+                    break;
+                case 4: // EXIT
+                    isExit = true;
+                    break;
+                default:
+                    System.out.println("Iltimos to'g'ri kommanda kiriting !!");
 
+            }
+
+            bankAccountTotal();
+
+
+        }
+
+
+    }
+
+    private void bankDeposite() {
+        Balance balance = new Balance();
+        balance.setId(balanceBankId++);
+        System.out.print("Pul Miqdorini kiriting: ");
+        balance.setAmount(scannerInt.nextInt());
+        balance.setType(Payment.BANK.name());
+        balances.add(balance);
+    }
+
+    private void cardDeposite() {
+        Balance balance = new Balance();
+        balance.setId(balanceCardId++);
+        System.out.print("Pul Miqdorini kiriting: ");
+        balance.setAmount(scannerInt.nextInt());
+        balance.setType(Payment.CARD.name());
+        balances.add(balance);
+    }
+
+    private void cashDeposite() {
+        Balance balance = new Balance();
+        balance.setId(balanceCashId++);
+        System.out.print("Pul Miqdorini kiriting: ");
+        balance.setAmount(scannerInt.nextInt());
+        balance.setType(Payment.CASH.name());
+        balances.add(balance);
+
+    }
+
+
+    public void addUserInBank() {
+        boolean isExit = false;
+        while (!isExit) {
             allUsers();
             comments.addUserInfo();
-
             switch (scannerInt.nextInt()) {
                 case 1:
-                    user.setId(balanceId++);
+                    Users user = new Users();
+                    user.setId(userId++);
                     System.out.print("Isim Familiyangizni kiriting: ");
                     user.setName(scannerStr.nextLine());
                     System.out.print("Yoshingizni kiriting: ");
@@ -60,11 +125,8 @@ public class Bank {
 
     public void allUsers() {
         System.out.println("-------------------");
-
         for (int i = 0; i < users.size(); i++) System.out.println(users.get(i).getId() + "." + users.get(i).getName());
-
         System.out.println("-------------------");
-
     }
 
 
