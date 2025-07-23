@@ -21,8 +21,49 @@ public class Bank {
     private int balanceBankId = 1;
     private int userId = 1;
 
+    private int userBalanceId = 1;
+
+
     private final ArrayList<Balance> balances = new ArrayList<>();
     private final ArrayList<Users> users = new ArrayList<>();
+
+
+    public void withdrawnAmount() {
+        boolean isExit = false;
+        while (!isExit) {
+            comments.paymentType();
+            switch (scannerInt.nextInt()) {
+                case 1: // cash
+                    withdrawnCash();
+                    break;
+                case 2: // card
+                    break;
+                case 3: // bank
+                    break;
+                case 4: // exit
+                    isExit = true;
+                    break;
+                default:
+                    System.out.println("Notog'ri raqam kiritildi !!");
+            }
+        }
+    }
+
+    private void withdrawnCash() {
+        allUsers();
+        System.out.print("Foydalanuvchilardan birini tanlang: ");
+        System.out.println("0 CHIQISH");
+        addUserAmountCash(scannerInt.nextInt());
+    }
+
+    private void addUserAmountCash(int id) {
+        Balance balance = new Balance();
+        balance.setId(userBalanceId++);
+        System.out.print("Qarz bermoqchi bo'lgan summangizni kiriting: ");
+        balance.setAmount(scannerInt.nextInt());
+        balance.setType(Payment.CASH.name());
+        users.get(id).setBalances(balance);
+    }
 
 
     public void bankAccountTotal() {
@@ -125,7 +166,8 @@ public class Bank {
 
     public void allUsers() {
         System.out.println("-------------------");
-        for (int i = 0; i < users.size(); i++) System.out.println(users.get(i).getId() + "." + users.get(i).getName());
+        for (int i = 0; i < users.size(); i++)
+            System.out.println(users.get(i).getId() + "." + users.get(i).getName() + "." + users.get(i).getBalances());
         System.out.println("-------------------");
     }
 
@@ -141,6 +183,5 @@ public class Bank {
     public ArrayList<Balance> getBalances() {
         return balances;
     }
-
 
 }

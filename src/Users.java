@@ -4,7 +4,8 @@ public class Users {
     private int id;
     private int age;
     private String name;
-    private final ArrayList<AccountBalance> accountBalances = new ArrayList<>();
+    private final ArrayList<Balance> balances = new ArrayList<>();
+
 
     public int getId() {
         return id;
@@ -30,7 +31,12 @@ public class Users {
         this.name = name;
     }
 
-    public ArrayList<AccountBalance> getAccountBalances() {
-        return accountBalances;
+    public ArrayList<Balance> getBalances() {
+        return balances;
     }
+
+    public void setBalances(Balance balance) {
+        balances.add(balance);
+    }
+
 }

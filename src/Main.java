@@ -22,6 +22,7 @@ public class Main {
                     bank.amountToDeposit();
                     break;
                 case 3: // Pul Chiqarish
+                    bank.withdrawnAmount();
                     break;
                 case 4: // Foydalanuvchilar Ro'yxati
                     bank.addUserInBank();
