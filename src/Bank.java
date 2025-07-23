@@ -39,6 +39,7 @@ public class Bank {
                 case 2: // card
                     break;
                 case 3: // bank
+                    withdrawnBank();
                     break;
                 case 4: // exit
                     isExit = true;
