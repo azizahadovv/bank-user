@@ -21,7 +21,9 @@ public class Bank {
     private int balanceBankId = 1;
     private int userId = 1;
 
-    private int userBalanceId = 1;
+    private int userBalanceCardId = 1;
+    private int userBalanceCashId = 1;
+    private int userBalanceBankId = 1;
 
 
     private final ArrayList<Balance> balances = new ArrayList<>();
@@ -37,6 +39,7 @@ public class Bank {
                     withdrawnCash();
                     break;
                 case 2: // card
+                    withdrawnCard();
                     break;
                 case 3: // bank
                     withdrawnBank();
@@ -50,21 +53,76 @@ public class Bank {
         }
     }
 
+    private void withdrawnBank() {
+        if (!users.isEmpty()) {
+            allUsers();
+            System.out.print("Foydalanuvchilardan birini tanlang: ");
+            addUserAmountBank(scannerInt.nextInt());
+        } else System.out.println("Oldin foydalanuvchi qo'shish kerak");
+
+    }
+
+    private void addUserAmountBank(int id) {
+        Balance balance = new Balance();
+        balance.setId(userBalanceBankId++);
+        System.out.print("Qarz bermoqchi bo'lgan summangizni kiriting: ");
+        int loanAmount = scannerInt.nextInt();
+
+        if (loanAmount <= card) {
+            balance.setAmount(loanAmount);
+            bank -= loanAmount;
+        }
+        balance.setType(Payment.BANK.name());
+        users.get(id - 1).setBalances(balance);
+    }
+
+    private void withdrawnCard() {
+        if (!users.isEmpty()) {
+            allUsers();
+            System.out.print("Foydalanuvchilardan birini tanlang: ");
+            addUserAmountCard(scannerInt.nextInt());
+        } else System.out.println("Oldin foydalanuvchi qo'shish kerak");
+
+    }
+
+    private void addUserAmountCard(int id) {
+        Balance balance = new Balance();
+        balance.setId(userBalanceCardId++);
+        System.out.print("Qarz bermoqchi bo'lgan summangizni kiriting: ");
+        int loanAmount = scannerInt.nextInt();
+
+        if (loanAmount <= card) {
+            balance.setAmount(loanAmount);
+            card -= loanAmount;
+        }
+        balance.setType(Payment.CARD.name());
+        users.get(id - 1).setBalances(balance);
+    }
+
+
     private void withdrawnCash() {
-        allUsers();
-        System.out.print("Foydalanuvchilardan birini tanlang: ");
-        System.out.println("0 CHIQISH");
-        addUserAmountCash(scannerInt.nextInt());
+        if (!users.isEmpty()) {
+            allUsers();
+            System.out.print("Foydalanuvchilardan birini tanlang: ");
+            addUserAmountCash(scannerInt.nextInt());
+        } else System.out.println("Oldin foydalanuvchi qo'shish kerak");
+
     }
 
     private void addUserAmountCash(int id) {
         Balance balance = new Balance();
-        balance.setId(userBalanceId++);
+        balance.setId(userBalanceCashId++);
         System.out.print("Qarz bermoqchi bo'lgan summangizni kiriting: ");
-        balance.setAmount(scannerInt.nextInt());
+        int loanAmount = scannerInt.nextInt();
+
+        if (loanAmount <= cash) {
+            balance.setAmount(loanAmount);
+            cash -= loanAmount;
+        }
         balance.setType(Payment.CASH.name());
-        users.get(id).setBalances(balance);
+        users.get(id - 1).setBalances(balance);
     }
+
 
     public void bankAccountTotal() {
         cash = 0;
@@ -172,8 +230,20 @@ public class Bank {
 
     public void allUsers() {
         System.out.println("-------------------");
-        for (int i = 0; i < users.size(); i++)
-            System.out.println(users.get(i).getId() + "." + users.get(i).getName() + "." + users.get(i).getBalances());
+        for (Users user : users) {
+            System.out.println("ID: " + user.getId() + " | Name: " + user.getName());
+
+            ArrayList<Balance> userBalances = user.getBalances();
+            if (userBalances != null && !userBalances.isEmpty()) {
+                for (Balance balance : userBalances) {
+                    System.out.println("➤ Balance ID: " + balance.getId()
+                            + ", Amount: " + balance.getAmount()
+                            + ", Type: " + balance.getType());
+                }
+            } else {
+                System.out.println("   ➤ Balans mavjud emas");
+            }
+        }
         System.out.println("-------------------");
     }
 

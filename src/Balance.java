@@ -3,9 +3,6 @@ public class Balance {
     private int amount;
     private String type;
 
-
-
-
     public int getId() {
         return id;
     }
